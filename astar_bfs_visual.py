@@ -23,13 +23,13 @@ def valid(pos):
     r, c = pos
     return 0 <= r < rows and 0 <= c < cols and maze[r][c] == 0
 
-def a_star(start, goal):
+def a_star(beginning, target):
     open_set = []
 
-    manhattan_distance = heuristic(start, goal)
+    manhattan_distance = heuristic(beginning, target)
     print("Result from Manhattan distance heuristic is:", manhattan_distance)
 
-    heapq.heappush(open_set, (0 + heuristic(start, goal), 0, start, [start]))
+    heapq.heappush(open_set, (0 + heuristic(beginning, target), 0, beginning, [beginning]))
     visited = set()
     trace = []
 
@@ -37,7 +37,7 @@ def a_star(start, goal):
         f, g, current, path = heapq.heappop(open_set)
         trace.append(current)
 
-        if current == goal:
+        if current == target:
             return path, trace
 
         if current in visited:
@@ -47,12 +47,12 @@ def a_star(start, goal):
         for move in moves:
             neighbor = (current[0] + move[0], current[1] + move[1])
             if valid(neighbor) and neighbor not in visited:
-                heapq.heappush(open_set, (g + 1 + heuristic(neighbor, goal), g + 1, neighbor, path + [neighbor]))
+                heapq.heappush(open_set, (g + 1 + heuristic(neighbor, target), g + 1, neighbor, path + [neighbor]))
 
     return None, trace
 
-def bfs(start, goal):
-    queue = deque([(start, [start])])
+def bfs(beginning, target):
+    queue = deque([(beginning, [beginning])])
     visited = set()
     trace = []
 
@@ -60,7 +60,7 @@ def bfs(start, goal):
         current, path = queue.popleft()
         trace.append(current)
 
-        if current == goal:
+        if current == target:
             return path, trace
 
         for move in moves:
