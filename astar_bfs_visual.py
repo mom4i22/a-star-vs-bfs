@@ -21,7 +21,9 @@ def heuristic(a, b):
 
 def valid(pos):
     r, c = pos
-    return 0 <= r < rows and 0 <= c < cols and maze[r][c] == 0
+    in_bounds = 0 <= r < rows and 0 <= c < cols
+    is_open = maze[r][c] == 0 if in_bounds else False
+    return in_bounds and is_open
 
 def a_star(beginning, target):
     open_set = []
