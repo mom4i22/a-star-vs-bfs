@@ -25,6 +25,10 @@ def valid(pos):
 
 def a_star(start, goal):
     open_set = []
+
+    manhattan_distance = heuristic(start, goal)
+    print("Result from Manhattan distance heuristic is:", manhattan_distance)
+
     heapq.heappush(open_set, (0 + heuristic(start, goal), 0, start, [start]))
     visited = set()
     trace = []
